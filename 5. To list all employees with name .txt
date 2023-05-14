@@ -1,0 +1,79 @@
+5. To list all employees with name ends with AS
+
+select * from emp 
+where ename like '%a' or ename like '%s'
+
+where ename regexp '*.[as]$'
+
+6. To list all employees with job starts with C and ends with K
+select * from emp 
+where ename like 'c%k'
+
+where ename regexp '^c.*k$'
+
+7. To list all employees with job contains L at third position and
+M at third last position
+where ename like '--l%m--'
+
+where enmae regpex '..l.*m..'
+
+
+10. To list all employees with job starts with C , E at 3rd position and ends with K
+
+job like 'c-e%k'
+
+.0
+
+2. Display the total salary of all employees . Total salary will be calculated as
+sal+comm+sal*0.10
+
+select ename, sal+ifnull (comm,0)+sal*0.10 'totalsal' from emp 
+
+
+
+List the Name and job of the emp who have joined before 1 jan 1986 and whose
+salary range is between 1200and 2500. Display the columns with user defined Column
+headers.
+
+4. Display the employee details who joined on 3rd of any month or any year
+select * from emp where day(hiredate)=3
+
+
+
+
+
+
+
+5. display all employees who joined between years 1981 to 1983.
+
+
+
+select * from emp where hiredate between '1981-01-01' and '1983-01-01';
+
+
+
+Get the Department number, and sum of Salary of all non managers where the sum is
+greater than 20000.
+select deptno,sum(sal) 
+from emp e
+where e.mgr not in (select d.mgr from emp d where d.mgr=e.mgr)
+group by deptno
+having sum(sal)>2000;
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

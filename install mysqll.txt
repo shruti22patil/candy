@@ -1,0 +1,11 @@
+how to install?
+click on insta'
+full-->next---->missing -->yes---->execute-->nxt -->ready to configure---
+
+3306port----->nxt-->pass root123---->next-->nx--->nxt----execute
+---->finish
+product confi--->nxt-->finish----->user name root
+pass--->root-->nxt-->exete
+
+
+

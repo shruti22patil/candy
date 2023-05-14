@@ -1,0 +1,645 @@
+concat('job',''
+
+substr(job,1,3);
+substr(ename,2,3)
+'@gmail.com'
+
+concat(substr(job,1,3),'.',substr(ename,2,3),'@gmail.com')
+
+12. find max sal and min sal for each job
+	select max(sal),min(sal) from emp  ;
+13. find how many employess have not received commission
+select * from emp where comm isnull;
+14. find sum of sal of all employees working in dept no 10
+select sum(Sal) from emp where dept no=10;
+15. find maximum salary,average sal for each job in every department
+select min(sal),max(sal),avg(sal)from emp where job=deptno;
+16. find max salary for every department if deptno is > 15 and arrange data in deptno
+select max(sal) from emp where deptno>15  group by deptno order by deptno ;
+
+
+
+
+17. find sum salary for every department if sum is > 3000
+select sum(sal) from emp group by deptno having sum(sal) >3000;
+
+18. list all department which has minimum 5 employees
+select deptno 
+from emp
+group by deptno
+having count(*)>5;
+19. count how many employees earn salary more than 2000 in each job
+select count(*) from emp where sal>2000 group by job ;
+
+20. list all enames and jobs in small case letter
+
+select lower(ename),lower(job) from emp;
+ 
+
+
+21. list all names and jobs so that the length of name should be 15 if it is smaller then add spaces
+to left
+
+lpad(value,length,ch)
+
+select lpad(ename,15," "),lpad(job,15," ")
+from emp;
+
+23. find sum of total earnings(sal+comm), average of sal+comm for all employees who earn sal >
+2000 and work in either dept no 10 or 20
+
+
+ifnull(colmn name,value)
+select sum(sal+comm) 
+24. list all employees who joined in Aug 1980 and salary is >1500 and < 2500
+
+select * from emp where month(hiredate)=08 and year(hiredate)=1980 and sal between 1500 and 2500;
+
+25. list all employees joined in either aug or may or dec
+select * from emp where month(hiredate )in (08,05,12);
+
+26. display name and hiredate in dd/mm/yy format for all employees whose job is clerk and they
+earn some commission
+
+select ename,dateformate(hiredate,dd/mm/yy) from emp where job='clerk' and comm<0;
+
+29. Display empid,name,sal,comm,remark Remark should base on following conditions
+
+comm >= 600 "excellent Keep it up"
+if it < 600 or not null "good"
+otherwise "Need improvement"
+
+///////select empno,ename,sal,comm,case
+when comm>=600 then 'excellent keep it up'
+when comm< 600 or not null then 'good'
+else 'need improvement' end "remark"
+from emp;
+
+
+30. Display empid, name, deptno and department name by using following conditions.
+
+dept 10 then "Hr"
+if 20 then "Admin"
+if 30 then "accounts"
+otherwise purchase
+
+
+
+select empno,ename,deptno,case
+when deptno=10 then 'HR'
+when deptno=20 then 'admin'
+when deptno=30 then 'account'
+else 'purchase' end "remark" from emp;
+
+32. Create following tables Student, Course
+
+Student (sid,sname) ---------------- sid ---primary key
+Course(cid,cname)-------------- cid ---primary key
+
+Marks(studid,courseid,marks)
+Sample data for marks table
+studid,courseid,marks
+1 1 99
+1 3 98
+2 1 95
+2 2 97
+
+sid int
+cid int
+marks int
+constrain pk primaray key(sid ,cid),
+constrain fk_sid foregin key(sid)reference student(sid)on delete cascade,
+constrain fk_cid foregin key(
+
+35. Update employee sal ---- increase sal of each employee by 15 % sal +comm, change the job to
+manager and mgr to 7777 for all employees in deptno 10.
+
+update emp  
+set sal= (sal+ifnull(comm,0))*1.15,job ='manager', mgr=7777 
+where deptno=10
+
+sel job manager=7777 from emp where deptno=10
+
+
+
+37. increase salary of all employees by 15% if they are earning some commission
+select sal from emp 
+set sal=1.5 
+where sal+comm
+
+
+
+38. list all employees with sal>smith's sal
+select * from emp where sal>(select sal from emp where ename='smith');
+
+39. list all employees who are working in smith's department;
+select * from emp where deptno=(select deptno from emp where ename='smith');
+
+40. list all employees with sal < king's sal and salary > smith's sal
+
+select * from emp where sal between(select sal from emp where ename='smith') and (select sal from emp where ename='king');
+
+41. delete all employees working in alan's department
+
+delete from emp where depno='alan';
+
+
+42. change salary of Alan to the salary of Miller.
+select 
+
+update emp 
+set sal =(select d.sal from (select * from emp) d where d.ename='miller')
+where ename ='allen';
+
+43. change salary of all emplees who working in Wall's department to the salary of Miller.
+update emp set sal = (select * from emp where ename=wall) (select * from emp where ename='Miller');
+
+44. list all employees with salary > either Smith's salary or alan's sal
+
+select * from emp
+ where sal > any  (select sal from emp 
+where ename in ('smith','alan'));
+
+
+45. list all employees who earn more than average sal of dept 10
+select * from emp where sal >  (select avg(sal) from emp 
+ where deptno=10);
+
+
+
+46. list all employees who earn more than average sal of Alan's department
+select * from emp where sal>(select avg(sal) from emp where deptno=(select deptno from emp where ename='allen'));
+
+
+47. list all employees who are working in purchase department
+
+select * from emp where deptno='purchase';
+
+
+48. list all employees who earn more than average salary of their own department
+select * from emp where sal>(select avg(sal) from emp where deptno=deptno);
+
+
+49. list all employees who earn sal < than their managers salary
+
+
+select * from emp where sal<any(select sal from emp where mgr='mgr');
+select * from emp where sal<any(select sal from emp where mgr=mgr);
+
+50. list all employees who are earning more than average salary of their job
+
+
+select *from emp where sal>(select avg(sal) from emp where job='job');
+ 
+
+select *from emp where sal>(select avg(sal) from emp where job=job);
+
+51. display employee name and department
+select ename,dname 
+from emp,dept where deptno=dept); 
+
+52. display empno,name,department name and grade (use emp,dept and salgrade table)
+
+select empno,ename,dname,
+
+
+
+
+
+
+
+
+1. find all employees whose sal > average salary of sales dept
+
+
+select * from emp where sal>(select avg(sal) from dep 
+
+
+
+select * from emp where sal >(select avg(sal) from emp where deptno=(select deptno from dept where dname='sales'))
+
+
+
+2. find all employees whose sal > average sal of its own department
+select
+ * from emp e where sal>(select avg(sal) from emp d where e.deptno=d.deptno)
+
+
+3. find average sal of all employees who are working under same manager
+select mgr,avg(sal)
+
+
+
+select avg(sal) from emp where sal(select avg(Sal)
+
+
+4. find all employees whose sal > average salary of all employees 
+who are working under his manager
+
+
+select * from emp where sal>(select avg(sal) from emp where mgr=mgr);
+
+
+1. to find all departments in which some employees are there
+
+select * from dept d where exists (select * from emp e where d.deptno=e.deptno ) 
+
+2. to find all departments in which no employees are there
+
+select * from dept d where not exists (select * from emp e where d.deptno=e.deptno);
+
+
+Find all singer names who have sung songs in the movies in which shahid kapoor has acted.
+
+select sname from singer where singerid=(select singerid from songs where movie id=(select movieid from movietable where actor=shahid kapoor)
+
+
+Find all songs of movies in which shahid kapoor has acted.
+
+songid                    
+lyrics                   
+movieid
+singerid
+composerid
+rating
+
+
+
+exists and not exists
+1. to find all departments in which some employees are there
+
+
+Find all songs of movies in which shahid kapoor has acted.
+select * from song where movieid in (select movieid from movie where actor='shahidkapoor');
+
+2) Find all singer names who have sung songs in the movies in which shahid kapoor has acted.
+
+
+
+select * from singer where singerid=(select singerid from song where movieid(select movieid from movie where aactor='shaidkapoor'))
+
+Find list of all songs, which are sung by singers who stays in either ‘Juhu’ or ‘Andheri’
+Select * from song where singerid 
+
+in(select singerid from singer where address=(‘Juhu’, ‘Andheri’)
+
+
+
+List all the songs which are recorded for movie ‘burfi’.
+
+
+Select * from songs where movieid
+
+select movieid from movie where movie='burfi'
+
+
+Find the songs sung by sonu nigam
+
+
+
+select * from song where movieid 
+
+select movieid from movie where actor='sonu nigam'
+
+
+Which singer has sung maximum songs?
+
+select * from singer e where singerid in(select singerid from songs d
+
+where e.singerid =d.singer
+
+
+
+selelct singerid,count (*) from song group by singerid
+order by count(*)desc
+
+
+
+create table product 
+(
+prodid int primary key,
+prodname varchar(20)not null unique,
+prodqty int check(qty>0)default 10,
+price double(9,2)check(price>0),
+prodid 
+);
+
+
+
+
+
+create table singer (
+singerid int primary key,
+sname varchar(20)not null ,
+address varchar(20)not null,
+moblie no varchar(20)unique,
+);
+
+
+
+
+create table movie(
+movieid int primary key,
+mname varchar(20)not null,
+actor varchar(20)not null,
+actress varchar(20)not null,
+producer varchar(20)not null,
+);
+
+
+create table songs(
+so
+)
+3. To display empno,name,sal,deptno,grade and dname for all employees who are working in
+either sales department or purchase dept
+
+select empno,ename,sal,deptno e,grade,dname
+from emp e,dept d,salgrade s
+
+where e.deptno=deptno and e.sal between s.losal and s.hisal and dname in ('sales','purchase');
+
+
+
+
+
+
+4. To display empno,name,sal,deptno,grade and dname for all employees who are working in
+either sales department or Accounting dept and sal >2000
+
+
+select empno,ename,sal,deptno d,grade,dname
+from emp e,dept d,salgrade s,
+where e.deptno=d.deptno and e.sal between s.losal and s.hisal and dname
+in('sales','accounting')and e.sal>2000;
+
+
+
+
+1. Display empno,ename,sal,dname for all employees , and also display departments in which
+no employees are there
+
+
+select empno,ename,sal,dname
+from emp e,dept d
+where 
+
+
+
+
+
+1. Display cusid, name, acid, balance, manager id for all customers
+
+customer(custid int, cname varchar(20),address varchar(20),mgrid int)
+primary key----custid
+foreign key----mgrid references manager(mgrid)
+Managers(mgrid int,mname varchar(20),mobile char(15))
+primary key----mgrid
+
+
+
+
+
+create table customer
+custid primary key,
+cname varchar(20)not null,
+address varchar(20)not null,
+w--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+create table room(
+rid int primary key,
+cname varchar(20),
+loc varchar(30)
+)
+
+-----------------------------------------------------------------
+
+create table faculty(
+fid int primary key,
+fname varchar(20),
+loc varchar(20)
+) 
+
+
+----------------------------
+create table course(
+cid int primary key,
+cname varchar(20),
+constraint fk_custid foreign key(rid)references room(rid)
+
+)
+
+...............................................................
+create table mydept_DBDA
+(
+deptid int primary key,
+dname varchar(20) not null unique,
+dloc varchar(20)
+)
+
+
+create table student1(
+sid int primary key,
+sname varchar(20) not null
+);
+
+
+
+create table course(
+cid int primary key,
+cname varchar(20) not null
+);
+
+
+
+create table marks(
+sid int,
+cid int, 
+marks int ,
+constraint fk_r foreign key (sid) references student1(sid)
+on delete set null 
+on update cascade,
+constraint fk_s foreign key (cid) references course(cid)
+on delete set null 
+on update cascade
+);
+
+
+
+
+insert into student1 values(1,'shruti'),(2,'rutvi');
+insert into marks values(1,1,44),(2,1,88);
+
+
+
+
+
+create table product(
+pid int primary key,
+pname varchar(20),
+price double(9,2)
+
+);
+
+
+create table salesman(
+sid int primary key,
+sname varchar(20),
+sloc varchar(30)
+);
+
+
+
+create table category
+(
+catid int primary key,
+cname varchar(20),
+cdesc varchar(20),
+
+);
+
+
+.............................................
+
+create table singer(
+sid int primary key,
+sname varchar(20),
+sadd varchar(30),
+smobile int );
+
+insert into singer values(3,'shru','siddhihrttrostel',98945488),(4,'himhu','ashan',4400566);,insert into singer values(16,'ruti','siddhihhgostel',989778),(7,'shu','pasan',4456676);
+.....................................................................................................................................
+
+create table movie(
+mid int primary key,
+mname varchar(20),
+mactor varchar(30),
+mproducer varchar(20)
+);
+
+
+insert into movie(1,'love uZIndgi','sk','srk'),(2,'booth','vicky','karanj')
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+create table song(
+songid int primary key,
+mid int,
+sid int,
+constraint fk_mid foreign key(mid) references movie(mid),
+constraint fk_sid foreign key(sid) references singer(sid)
+);
+
+alter table song add sname varchar(20);
+
+
+insert into song values (20,'love u zindgi'),(22,'chana ve'),(23,'tum hi ho'),(24,'kaise batau tumhe');
+
+
+...............................................................................................................................................
+
+
+
+PLSQL_________________________________________________________________________________________________________________
+
+
+in--> no deu shkto procedure cha aat
+out-->khuty pn deu shkto
+inout---> 
+
+
+
+
+
+
+
+
+
+delimiter//
+create procedure myName(mname int )
+begin 
+
+
+select count(*) from emp 
+where deptno=mname;
+end//
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+delimiter//
+create procedure deptno1(Dname int,out b int)
+begin
+select count(*) into b  from emp 
+
+where deptno=dname;
+select b;
+
+end//
+
+call deptno1(10,@g);
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+delimiter //
+create procedure depto2(aname int inout c int)
+begin 
+select count(*)into c from emp where deptno=aname;
+select a;
+end//
+call deptno2(
+
+
+======================================================================
+
+delimiter //
+create procedure f(in num int)
+begin
+declare fact int ;
+declare i int;
+set fact=1;
+set i=1;
+while(num>i)
+do
+set fact=fact*i;
+set i=i+1;
+end while;
+
+select fact;
+end //
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''delimiter //
+create procedure r(in num int)
+begin
+declare netsal double(9,2);
+declare remark varchar(20);
+
+
+select sal+ifnull(comm,0) into netsal from emp where empno=num;
+
+if netsal<1000 then set remark='less';
+elseif netsal between 1000 and 2000 then set remark='ok';
+elseif netsal between 2000 and 2500 then set remark='better';
+else set remark='better';
+end if ;
+select netsal,remar\7u7lk;
+end //
+
+ CO2
+
+delimiter //
+create procedure  update(int upgr int)
+begin 
+declare finished int default int;
+declare vempno,vdeptno,mgr int;
+declare vename,vjob varchar;
+declare vsal,vcomm double(9,2);
+declare vhiredate date;
+
+declare ss_cur cursor for select lliou,ekrmynte j6jq 7M,1KI9`8NYT24QREVFGBHU16M
+
+
+
+
+
+
+
+
+

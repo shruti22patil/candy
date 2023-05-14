@@ -1,0 +1,20 @@
+create table myemployee(
+    -> empno number(5)primary key,
+    -> fname varchar2(15) not null,
+    -> mname varchar2(15),
+    -> iname varchar2(15) not null,
+    -> sal number(9,2)check(sal>=1000),
+    -> doj date default sysdate,
+    -> passportnum varchar2(15)unique,
+    -> deptno number constrain fk_deptno references mydept_DBDA(deptid) on delete cascade
+    -> );
+\
+
+
+
+
+ Create table myemployee(
+    -> empid int primary key ,
+    -> ename varchar2(15) not null,
+    -> cdesc varchar2(15)
+    -> );

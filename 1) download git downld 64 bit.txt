@@ -1,0 +1,7 @@
+1) download git downld 64 bit
+2) next--next...........next
+3)cancel---folder
+4)git -v---version check
+5)git status ---check status --- current 
+6)clone ---copy the git --link of project
+7)
